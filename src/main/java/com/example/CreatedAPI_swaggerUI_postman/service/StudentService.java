@@ -1,8 +1,10 @@
-package service;
+package com.example.CreatedAPI_swaggerUI_postman.service;
 
 import java.util.HashMap;
-import model.Student;
+import com.example.CreatedAPI_swaggerUI_postman.model.Student;
+import org.springframework.stereotype.Service;
 
+@Service
 public class StudentService {
 
     private final HashMap<Long, Student> students = new HashMap<>();
@@ -18,7 +20,7 @@ public class StudentService {
         return students.get(id);
     }
 
-    public Student editStudent(Student student) {
+    public Student editStudent(long id, Student student) {
         if (!students.containsKey(id)) {
             return null;
         }

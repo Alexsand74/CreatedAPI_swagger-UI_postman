@@ -1,7 +1,7 @@
-package service;
+package com.example.CreatedAPI_swaggerUI_postman.service;
 
 import java.util.HashMap;
-import model.Faculty;
+import com.example.CreatedAPI_swaggerUI_postman.model.Faculty;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +20,7 @@ public class FacultyService {
         return faculties.get(id);
     }
 
-    public Faculty editFaculty(Faculty faculty) {
+    public Faculty editFaculty(long id, Faculty faculty) {
         if (!faculties.containsKey(id)) {
             return null;
         }

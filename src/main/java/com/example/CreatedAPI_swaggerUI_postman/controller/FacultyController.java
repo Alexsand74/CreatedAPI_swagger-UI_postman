@@ -1,4 +1,4 @@
-package controller;
+package com.example.CreatedAPI_swaggerUI_postman.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import model.Faculty;
-import service.FacultyService;
+import com.example.CreatedAPI_swaggerUI_postman.model.Faculty;
+import com.example.CreatedAPI_swaggerUI_postman.service.FacultyService;
 
 @RestController
 @RequestMapping("/faculty")
@@ -39,7 +39,8 @@ public class FacultyController {
 
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
-        Faculty foundFaculty = facultyService.editFaculty(faculty);
+        Faculty foundFaculty = facultyService.editFaculty(faculty.getId(),faculty);
+
         if (foundFaculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
