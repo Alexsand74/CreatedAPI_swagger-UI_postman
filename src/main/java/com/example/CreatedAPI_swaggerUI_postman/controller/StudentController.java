@@ -13,16 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.CreatedAPI_swaggerUI_postman.model.Student;
 import com.example.CreatedAPI_swaggerUI_postman.service.StudentService;
 
-@RestController
 @RequestMapping("/student")
+@RestController
 public class StudentController {
-
     private final StudentService studentService;
-
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
-
     @GetMapping("{id}")
     public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
         Student student = studentService.findStudent(id);
@@ -47,7 +44,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }

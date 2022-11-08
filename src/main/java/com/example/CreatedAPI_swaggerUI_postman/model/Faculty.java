@@ -1,8 +1,15 @@
 package com.example.CreatedAPI_swaggerUI_postman.model;
 
-import java.util.Objects;
-public class Faculty {
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Objects;
+@Entity
+public class Faculty {
+    @Id
+    @GeneratedValue
     private long id;
     private String name, color;
 
