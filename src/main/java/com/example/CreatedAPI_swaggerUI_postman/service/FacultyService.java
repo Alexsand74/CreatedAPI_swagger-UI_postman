@@ -1,5 +1,6 @@
 package com.example.CreatedAPI_swaggerUI_postman.service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import com.example.CreatedAPI_swaggerUI_postman.model.Faculty;
 import com.example.CreatedAPI_swaggerUI_postman.repository.FacultyRepository;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 public class FacultyService {
 //    private final HashMap<Long, Faculty> faculties = new HashMap<>();
 //    private long count = 0;
-@Autowired
 private final FacultyRepository facultyRepository;
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
@@ -25,7 +25,7 @@ private final FacultyRepository facultyRepository;
 
     public Faculty findFaculty(long id) {
 //        return faculties.get(id);
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElse(null);
     }
 
     public Faculty editFaculty(long id, Faculty faculty) {
@@ -34,11 +34,16 @@ private final FacultyRepository facultyRepository;
 //        }
 //        faculties.put(id, faculty);
 //        return faculty;
-        return facultyRepository.save(faculty);
+        if (!(facultyRepository.findById(id) == null)) {
+            return facultyRepository.save(faculty);
+        } return facultyRepository.findById(id).orElse(null);
     }
 
     public void deleteFaculty(long id) {
 //      return faculties.remove(id);
         facultyRepository.deleteById(id);
+    }
+    public Collection<Faculty> findFacultyByColor(String color) {
+        return facultyRepository.findByColor(color);
     }
 }

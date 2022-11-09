@@ -2,16 +2,11 @@ package com.example.CreatedAPI_swaggerUI_postman.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.example.CreatedAPI_swaggerUI_postman.model.Faculty;
 import com.example.CreatedAPI_swaggerUI_postman.service.FacultyService;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/faculty")
@@ -37,6 +32,13 @@ public class FacultyController {
         return facultyService.addFaculty(faculty);
     }
 
+    @GetMapping(value = "color")
+    public ResponseEntity<Collection<Faculty>> findFacultyByColor (@RequestParam(required = false) String color){
+        if(color != null && !color.isBlank()){
+            return ResponseEntity.ok(facultyService.findFacultyByColor(color));
+        }
+        return ResponseEntity.notFound().build();// не найдено
+    }
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
         Faculty foundFaculty = facultyService.editFaculty(faculty.getId(),faculty);
@@ -48,7 +50,7 @@ public class FacultyController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteFaculty(@PathVariable Long id) {
+    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
