@@ -2,6 +2,8 @@ package com.example.CreatedAPI_swaggerUI_postman.service;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Optional;
+
 import com.example.CreatedAPI_swaggerUI_postman.model.Faculty;
 import com.example.CreatedAPI_swaggerUI_postman.repository.FacultyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,15 @@ private final FacultyRepository facultyRepository;
 //        }
 //        faculties.put(id, faculty);
 //        return faculty;
-        if (!(facultyRepository.findById(id) == null)) {
-            return facultyRepository.save(faculty);
-        } return facultyRepository.findById(id).orElse(null);
+//        if (!(facultyRepository.findById(id) == null)) {
+//            return facultyRepository.save(faculty);
+//        } return facultyRepository.findById(id).orElse(null);
+//  findById возвращает Optional и он не будет наллом никогда. Здесь лучше вот так сделать:
+        Optional<Faculty> optional = facultyRepository.findById(id);
+        if(!optional.isPresent()) {
+            return null;
+        }
+        return facultyRepository.save(faculty);
     }
 
     public void deleteFaculty(long id) {

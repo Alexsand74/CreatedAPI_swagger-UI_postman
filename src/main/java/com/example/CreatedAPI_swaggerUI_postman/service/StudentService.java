@@ -1,9 +1,11 @@
 package com.example.CreatedAPI_swaggerUI_postman.service;
 
 import java.util.Collection;
+import java.util.Optional;
 //import java.util.HashMap;
 import com.example.CreatedAPI_swaggerUI_postman.model.Student;
 import com.example.CreatedAPI_swaggerUI_postman.repository.StudentRepository;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,10 +35,16 @@ private final StudentRepository studentRepository;
 //        }
 //        students.put(id, student);
 //        return student;
-          if (!(studentRepository.findById(id) == null)) {
-              return studentRepository.save(student);
-          }
-          return studentRepository.findById(id).orElse( null);
+//          if (!(studentRepository.findById(id) == null)) {
+//              return studentRepository.save(student);
+//          }
+//          return studentRepository.findById(id).orElse( null);
+//  findById возвращает Optional и он не будет наллом никогда. Здесь лучше вот так сделать:
+        Optional<Student> optional =  studentRepository.findById(id);
+        if(!optional.isPresent()) {
+            return null;
+        }
+        return studentRepository.save(student);
     }
 
     public void deleteStudent(long id) {
