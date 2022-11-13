@@ -7,6 +7,7 @@ import com.example.CreatedAPI_swaggerUI_postman.model.Faculty;
 import com.example.CreatedAPI_swaggerUI_postman.service.FacultyService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/faculty")
@@ -53,5 +54,21 @@ public class FacultyController {
     public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/color/{color}")
+    public List<Faculty> getStudents(@PathVariable String color) {
+        return facultyService.getFacultyColor(color);
+    }
+    @GetMapping
+    public ResponseEntity<Collection<Faculty>> findByNameOrColorIgnoreCase(@RequestParam (required = false) String name,
+                                                                           @RequestParam (required = false) String color){
+        if(name != null && !name.isBlank()){
+            return ResponseEntity.ok(facultyService.findByNameIgnoreCase(name));
+        }
+        if(color != null && !color.isBlank()){
+            return ResponseEntity.ok(facultyService.findByColorIgnoreCase(color));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }

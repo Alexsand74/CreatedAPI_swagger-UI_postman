@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Collection;
 import java.util.Objects;
 @Entity
 public class Faculty {
@@ -12,16 +14,18 @@ public class Faculty {
     @GeneratedValue
     private long id;
     private String name, color;
-
     public Faculty() {
     }
-
     public Faculty(long id, String name, String color) {
         this.id = id;
         this.name = name;
         this.color = color;
     }
-
+    @OneToMany(mappedBy = "faculty")
+    private Collection<Student> students;
+    public Collection<Student> getStudents() {
+        return students;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o)
