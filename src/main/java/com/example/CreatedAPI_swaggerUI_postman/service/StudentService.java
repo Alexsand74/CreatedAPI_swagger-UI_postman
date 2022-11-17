@@ -11,12 +11,13 @@ import java.util.stream.Collectors;
 import com.example.CreatedAPI_swaggerUI_postman.model.Faculty;
 import com.example.CreatedAPI_swaggerUI_postman.model.Student;
 import com.example.CreatedAPI_swaggerUI_postman.repository.StudentRepository;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StudentService {
-private final Map<Long, Student> mapStudents = new HashMap<>();
-    private long lastId = 0;
+//private final Map<Long, Student> mapStudents = new HashMap<>();
+//    private long lastId = 0;
 
 private final StudentRepository studentRepository;
     public StudentService(StudentRepository studentRepository) {
@@ -40,15 +41,10 @@ private final StudentRepository studentRepository;
     }
 
     public void deleteStudent(long id) {
-        if ( studentRepository.existsById(id)){
-        Student studentOld = studentRepository.getReferenceById(id);
-        studentOld.setAge(0);
-        studentOld.setName(null);
-        studentRepository.save(studentOld);
+      studentRepository.deleteById(id);
         }
 
-    }
-    public void deleteAllStudent(){
+     public void deleteAllStudent(){
         studentRepository.deleteAll();
     }
 
@@ -62,10 +58,6 @@ private final StudentRepository studentRepository;
         return studentRepository.getFacultyByStudentId(id);
     }
     public List<Student> getStudentbyAge(int age) {
-        List<Student> lsStudents;
-            lsStudents = mapStudents.values().stream()
-                .filter(st -> st.getAge() == age)
-                .collect(Collectors.toList());
-        return lsStudents;
+        return studentRepository.findByAge(age);
     }
 }

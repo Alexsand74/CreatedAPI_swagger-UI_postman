@@ -57,7 +57,7 @@ public class FacultyController {
     }
 
     @GetMapping("/color/{color}")
-    public List<Faculty> getStudents(@PathVariable String color) {
+    public List<Faculty> getFaculty (@PathVariable String color) {
         return facultyService.getFacultyColor(color);
     }
     @GetMapping
